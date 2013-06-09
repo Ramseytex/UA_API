@@ -57,7 +57,7 @@ report = ""
 		
 		if report == "user count"
 		print "enter date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date1 = gets.strip
 		pp Apireports.get(['/activeusers/?date=',date1].join())
@@ -73,7 +73,7 @@ report = ""
 		
 		if report == "push count"
 		print "enter start date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date1 = gets.strip
 		
@@ -83,7 +83,7 @@ report = ""
 		#time1 = gets.strip
 		
 		print "enter end date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date2 = gets.strip
 		
@@ -110,7 +110,7 @@ report = ""
 		
 		if report == "response report"
 		print "enter start date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date1 = gets.strip
 		
@@ -120,7 +120,7 @@ report = ""
 		#time1 = gets.strip
 		
 		print "enter end date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date2 = gets.strip
 		
@@ -147,7 +147,7 @@ report = ""
 		
 		if report == "app opens"
 		print "enter start date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date1 = gets.strip
 		
@@ -157,7 +157,7 @@ report = ""
 		#time1 = gets.strip
 		
 		print "enter end date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date2 = gets.strip
 		
@@ -184,7 +184,7 @@ report = ""
 		
 		if report == "time in app"
 		print "enter start date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date1 = gets.strip
 		
@@ -194,7 +194,7 @@ report = ""
 		#time1 = gets.strip
 		
 		print "enter end date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date2 = gets.strip
 		
@@ -221,7 +221,7 @@ report = ""
 		
 		if report == "opt-ins"
 		print "enter start date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date1 = gets.strip
 		
@@ -231,7 +231,7 @@ report = ""
 		#time1 = gets.strip
 		
 		print "enter end date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date2 = gets.strip
 		
@@ -258,7 +258,7 @@ report = ""
 		
 		if report == "opt-outs"
 		print "enter start date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date1 = gets.strip
 		
@@ -268,7 +268,7 @@ report = ""
 		#time1 = gets.strip
 		
 		print "enter end date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date2 = gets.strip
 		
@@ -297,12 +297,12 @@ report = ""
 		pass = get_password()
 		statreport = Statreport.new(key, pass)
 		print "enter start date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date1 = gets.strip
 		
 		print "enter end date
-		Format 2012-05-05
+		Format YYYY-MM-DD
 		: "
 		date2 = gets.strip
 		
