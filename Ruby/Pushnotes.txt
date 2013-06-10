@@ -1,3 +1,6 @@
+Pushnotes are basic notes for building ruby push.
+
+
 curl -X POST -u "Xy0gYfzLQfKYSvZuBW7R-Q:ISPsiGzqSEWa2lW48ox9og" \ -H "Content-Type:
 application/json" \ --data '"aps":
 {"alert": "Hello!"}}' \ https://go.urbanairship.com/api/push/
