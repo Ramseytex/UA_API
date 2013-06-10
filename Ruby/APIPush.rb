@@ -2,16 +2,18 @@ require 'rubygems'
 require 'httparty'
 require 'highline/import'
 require 'pp'
+require 'json'
 
 	class Apipush
 	  include HTTParty
 	    base_uri "https://go.urbanairship.com"
+	    format :json
 	   	def initialize(key, secret)
 	    self.class.basic_auth key, secret
 	    end
 	    def singledevice(apid)
-	    default_params :output => 'json'
-  		format :json
+	    default_params 
+  		
   		end
 	end
 	def get_secret(prompt = "Enter your master secret:")
@@ -20,9 +22,24 @@ require 'pp'
 	
 	def get_command(prompt = "What kind of push do you need?
 	single device
-	multiple device ids
+	multiple device
 	broadcast
 	exit" )
+	ask(prompt) {|q| q.echo = true}
+	end
+	
+	def get_platform(prompt = "What platform?
+	iOS
+	Android
+	Both")
+	ask(prompt) {|q| q.echo = true}
+	end
+	
+	def get_APID(prompt = "Please enter your APIDs separated by a ,")
+	ask(prompt) {|q| q.echo = true}
+	end
+	
+	def get_device(prompt = "Please enter your device_tokens separated by a ,")
 	ask(prompt) {|q| q.echo = true}
 	end
 	
@@ -32,36 +49,21 @@ require 'pp'
 		apipush = Apipush.new(key, secret)
 begin	
 command = ""
-	print "What kind of push do you need?
-	single device
-	multiple device ids
-	broadcast
-	exit
-	"		
-	command = gets.strip
-	command.downcase
+	command = get_command()
 	
 	if command == "single device"
-	options = {
-			:android => {
-				:alert=> "This is a test 123.", 
-				:apids => '["0748a54b-faf7-48eb-9db6-051da3ec5093"]'
-			},
-		:headers => { 'Content-Type' => 'application/json' } 
-  	}
-	pp Apipush.post('/api/push/', options).inspect
+	
+	end
+	
+	if command == "multiple device"
+	
 	end
 	
 	if command == "broadcast"
-	options = {
-		:body => {
-   			:android => {
-      			:alert => "Hello!"
-			}
-		},
-		:headers => { 'Content-Type' => 'application/json' }	
-    	}
-	pp Apipush.post('/api/push/broadcast', options).inspect
+	print "Enter your message text: "
+	msgtxt = gets.strip
+	msgtxt = %Q{"#{msgtxt}"}
+	pp Apipush.post('https://go.urbanairship.com/api/push/broadcast/', :body => {"aps"=> {"alert"=> msgtxt}, "android"=> {"alert"=>  msgtxt}}.to_json, :headers => {'Content-type' => 'application/json'})
 	end
 	
 	
