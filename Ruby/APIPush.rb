@@ -64,4 +64,5 @@ command = ""
 	pp Apipush.post('/api/push/broadcast', options).inspect
 	end
 	
+	
 end while command != "exit"
