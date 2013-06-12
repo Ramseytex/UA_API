@@ -1,8 +1,8 @@
 require 'rubygems'
-
-
-begin
-    gem 'httparty', '0.11.0'
+require 'pp'
+def load_gem(name, version=nil)
+  begin
+    gem name, version
   rescue LoadError
     version = "--version '#{version}'" unless version.nil?
     system("gem install #{name} #{version}")
@@ -10,47 +10,12 @@ begin
     retry
   end
 
-  require "httparty"
+  require name
+end
 
-
-
-
- begin
-    gem 'highline', '1.6.19'
-  rescue LoadError
-    version = "--version '#{version}'" unless version.nil?
-    system("gem install #{name} #{version}")
-    Gem.clear_paths
-    retry
-  end
-
-  require 'highline/import'
-
-
-
- begin
-    gem 'bundler', '1.3.5'
-  rescue LoadError
-    version = "--version '#{version}'" unless version.nil?
-    system("gem install #{name} #{version}")
-    Gem.clear_paths
-    retry
-  end
-
-  require 'pp'
-
-
-
- begin
-    gem 'json', '1.8.0'
-  rescue LoadError
-    version = "--version '#{version}'" unless version.nil?
-    system("gem install #{name} #{version}")
-    Gem.clear_paths
-    retry
-  end
-
-  require 'json'
+load_gem 'httparty'
+load_gem 'json'
+load_gem 'highline'
 
 
 	class Apipush
