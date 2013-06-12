@@ -1,7 +1,23 @@
+
 require 'rubygems'
-require 'httparty'
-require 'highline/import'
 require 'pp'
+def load_gem(name, version=nil)
+  begin
+    gem name, version
+  rescue LoadError
+    version = "--version '#{version}'" unless version.nil?
+    system("gem install #{name} #{version}")
+    Gem.clear_paths
+    retry
+  end
+
+  require name
+end
+
+load_gem 'httparty'
+load_gem 'json'
+load_gem 'highline'
+
 	class Apireports
 	  include HTTParty
 	    base_uri "https://go.urbanairship.com/api/reports"
