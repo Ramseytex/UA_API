@@ -14,7 +14,7 @@ class Apipush
 		#Goat
 		basic_auth 'ISex_TTJRuarzs9-o_Gkhg', '8kw22E_uTHaH6KL5Wiuk0g'
 	    default_params 
-  		format :json
+  		#format :json
   		end
   	#"apids"=> ["0748a54b-faf7-48eb-9db6-051da3ec5093"]
 #API v2
@@ -22,5 +22,42 @@ class Apipush
 #API v3
 #pp Apipush.post('/api/push/', :body => {"audience" => "all", "device_types" => "all", "notification" => {"alert" => "testing 123"}}.to_json, :headers => {"Content-type" => "application/json", "Accept" => "application/vnd.urbanairship+json; version=3;"}).inspect
 
-#API v3 Goat
-pp Apipush.post('/api/push/', :body => {"audience" => "all", "device_types" => ["ios", "android"], "notification" => {"ios" => {"alert" => "Goat API v3", "sound" => "cat.caf"}, "android" => {"alert" => "Goat API v3"}}}.to_json, :headers => {"Content-type" => "application/json", "Accept" => "application/vnd.urbanairship+json; version=3;"}).inspect
+#API v3 Goat Push
+=begin
+pp Apipush.post('/api/push/', 
+:body => 
+		{"audience" => 
+			{"location" => 
+				{"us_zip" => "97007",
+					"date" => 
+						{"recent" => 
+							{"days" => 4 }}}}, 
+		"device_types" => ["android"], 
+			"notification" => 
+				{"alert" => "Goat API v3x"}}.to_json, 
+:headers => 
+	{"Content-type" => "application/json", 
+		"Accept" => "application/vnd.urbanairship+json; version=3;", 
+			"Content-Length" => "1234"}).inspect
+=end
+#API v3 Goat schedule
+
+pp Apipush.post('/api/schedules/', 
+:body => 
+	{"schedule" => 
+		{"local_scheduled_time" => "2013-06-13T14:15:00"},
+	"push" => 
+		{"audience" => 
+			{"location" => 
+				{"us_zip" => "97007",
+					"date" => 
+						{"recent" => 
+							{"days" => 4 }}}}, 
+		"device_types" => "all", 
+			"notification" => 
+				{"alert" => "Goat API v3x"}}}.to_json, 
+:headers => 
+	{'Content-type' => 'application/vnd.urbanairship+json; version=3;', 
+		'Accept' => 'application/vnd.urbanairship+json; version=3;'}).inspect
+
+			
