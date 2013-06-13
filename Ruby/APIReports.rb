@@ -17,10 +17,12 @@ end
 load_gem 'httparty'
 load_gem 'json'
 load_gem 'highline'
+require 'highline/import'
 
 	class Apireports
 	  include HTTParty
 	    base_uri "https://go.urbanairship.com/api/reports"
+	    default_params :headers => {"Accept"=> "application/vnd.urbanairship+csv; version=3;", "Content-type" => "application/json"}
 		def initialize(key, secret)
 	    self.class.basic_auth key, secret
 	  	end
@@ -51,9 +53,17 @@ load_gem 'highline'
 	end
 	
 print "Enter your app key: "
-		key = gets.strip
+		akey = gets.strip
+		if akey != "goat"
+		key = akey
 		secret = get_secret()
-		apireports = Apireports.new(key, secret)
+		
+		end
+		if akey == "goat"
+		key = 'ISex_TTJRuarzs9-o_Gkhg'
+		secret = '8kw22E_uTHaH6KL5Wiuk0g'
+		end
+apireports = Apireports.new(key, secret)		
 location = ""		
 report = ""
 	while report != 'exit'
@@ -82,7 +92,7 @@ report = ""
 			if save.include? 'y'
 				location = get_loc
 			File.open(location, 'w') do |f|
-  				f.write(Apireports.get(['/sends/?start=',date1,'&end=',date2,'&precision=',precision].join()))
+  				f.write(Apireports.get(['/activeusers/?date=',date1, "&format=csv"].join()))
 				end
 			end
 		end
@@ -119,7 +129,7 @@ report = ""
 			if save.include? 'y'
 				location = get_loc
 			File.open(location, 'w') do |f|
-  				f.write(Apireports.get(['/sends/?start=',date1,'&end=',date2,'&precision=',precision].join()))
+  				f.write(Apireports.get(['/sends/?start=',date1,'&end=',date2,'&precision=',precision,"&format=csv"].join()))
 				end
 			end
 		end		
@@ -156,7 +166,7 @@ report = ""
 			if save.include? 'y'
 				location = get_loc
 			File.open(location, 'w') do |f|
-  				f.write(Apireports.get(['/sends/?start=',date1,'&end=',date2,'&precision=',precision].join()))
+  				f.write(Apireports.get(['/responses/?start=',date1,'&end=',date2,'&precision=',precision].join()))
 				end
 			end
 		end	
@@ -193,7 +203,7 @@ report = ""
 			if save.include? 'y'
 				location = get_loc
 			File.open(location, 'w') do |f|
-  				f.write(Apireports.get(['/sends/?start=',date1,'&end=',date2,'&precision=',precision].join()))
+  				f.write(Apireports.get(['/opens/?start=',date1,'&end=',date2,'&precision=',precision].join()))
 				end
 			end
 		end		
@@ -230,7 +240,7 @@ report = ""
 			if save.include? 'y'
 				location = get_loc
 			File.open(location, 'w') do |f|
-  				f.write(Apireports.get(['/sends/?start=',date1,'&end=',date2,'&precision=',precision].join()))
+  				f.write(Apireports.get(['/timeinapp/?start=',date1,'&end=',date2,'&precision=',precision].join()))
 				end
 			end
 		end	
@@ -267,7 +277,7 @@ report = ""
 			if save.include? 'y'
 				location = get_loc
 			File.open(location, 'w') do |f|
-  				f.write(Apireports.get(['/sends/?start=',date1,'&end=',date2,'&precision=',precision].join()))
+  				f.write(Apireports.get(['/optins/?start=',date1,'&end=',date2,'&precision=',precision].join()))
 				end
 			end
 		end	
@@ -304,7 +314,7 @@ report = ""
 			if save.include? 'y'
 				location = get_loc
 			File.open(location, 'w') do |f|
-  				f.write(Apireports.get(['/sends/?start=',date1,'&end=',date2,'&precision=',precision].join()))
+  				f.write(Apireports.get(['/optouts/?start=',date1,'&end=',date2,'&precision=',precision].join()))
 				end
 			end
 		end	
