@@ -15,14 +15,19 @@ def load_gem(name, version=nil)
   require name
 end
 
+load_gem 'spinning_cursor'
+SpinningCursor.start do
+  banner "Installing Dependancies"
+  type :dots
+  message "Install Completed"
+end
 load_gem 'httparty'
 load_gem 'json'
 load_gem 'highline'
-load_gem 'spinning_cursor'
-
 require 'highline/import'
-
+SpinningCursor.stop
 list = ''
+system("clear")
 def get_user(prompt = "Enter your username: " )
 	ask(prompt) {|q| q.echo = true}
 	end
