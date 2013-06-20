@@ -14,7 +14,7 @@ def load_gem(name, version=nil)
 
   require name
 end
-def load_ssh(name, version=nil)
+def load_special(name, version=nil)
   begin
     gem name, version
   rescue LoadError
@@ -33,7 +33,8 @@ end
 load_gem 'httparty'
 load_gem 'json'
 load_gem 'highline'
-load_ssh 'net-ssh'
+load_special 'net-ssh'
+load_special 'bundler'
 require 'net/ssh'
 require 'highline/import'
 SpinningCursor.stop
@@ -59,12 +60,9 @@ def get_reference(prompt = "What do you want to reference (example : ISex_TTJRua
 	ask(prompt) {|q| q.echo = true}
 	end
 def get_location(prompt = "where would you like to save this report? (example: awesome.txt or User/Name/Documents/awesome.txt): " )
-	require "readline"
-while buf = Readline.readline("> ", true)
-  p Readline::HISTORY.to_a
-  print("-> ", buf, "\n")
-end
-	end		
+	ask(prompt) {|q| q.echo = true}
+	end
+	
 
 
 user = get_user()
@@ -92,8 +90,22 @@ list = list.to_s.gsub('"', '')
 SpinningCursor.stop
 print list
 print "\n"
+print "services: iOS, GCM, C2DM, He2"
 print "\n"
 server = get_servers()
+server.downcase
+if server == 'ios'
+server = 'gatekeeper,gooeybuttercake,slimer,yaw'
+end
+if server == 'gcm'
+server = 'gatekeeper,gooeybuttercake,slimer,bonestorm'
+end
+if server == 'c2dm'
+server = 'gatekeeper,gooeybuttercake,slimer,c2dm'
+end
+if server == 'he2'
+server = 'gatekeeper,gooeybuttercake,slimer,helium,helium2'
+end
 print "\n"
 start = get_begin()
 print "\n"
@@ -102,6 +114,7 @@ print "\n"
 reference = get_reference()
 print "\n"
 report = ''
+output = ''
 SpinningCursor.start do
   banner "Generating Report"
   type :spinner
@@ -111,7 +124,7 @@ ssh.open_channel do |channel|
 channel.exec("ua-loggrep -l")
 channel.send_data( "y\n" )
 end
-output = ssh.exec!("ua-loggrep -s #{server} -b #{start} -e #{ends} -r '.*#{reference}.*'")										
+output << ssh.exec!("ua-loggrep -s #{server} -b #{start} -e #{ends} -r '.*#{reference}.*'")									
 contents = output.match(/Success!\noutput files:(.*)\n/m)[1].strip
 report = ssh.exec!("cat #{contents}")
 if report == ''
