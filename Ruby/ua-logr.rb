@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'pp'
-require 'net/ssh'
+
 
 def load_gem(name, version=nil)
   begin
@@ -24,6 +24,8 @@ end
 load_gem 'httparty'
 load_gem 'json'
 load_gem 'highline'
+load_gem 'net-ssh'
+require 'net/ssh'
 require 'highline/import'
 SpinningCursor.stop
 list = ''
