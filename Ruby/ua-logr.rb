@@ -14,7 +14,16 @@ def load_gem(name, version=nil)
 
   require name
 end
-
+def load_ssh(name, version=nil)
+  begin
+    gem name, version
+  rescue LoadError
+    version = "--version '#{version}'" unless version.nil?
+    system("gem install #{name} #{version}")
+    Gem.clear_paths
+    retry
+  end
+  end
 load_gem 'spinning_cursor'
 SpinningCursor.start do
   banner "Installing Dependancies"
@@ -24,7 +33,7 @@ end
 load_gem 'httparty'
 load_gem 'json'
 load_gem 'highline'
-load_gem 'net-ssh'
+load_ssh 'net-ssh'
 require 'net/ssh'
 require 'highline/import'
 SpinningCursor.stop
@@ -50,7 +59,11 @@ def get_reference(prompt = "What do you want to reference (example : ISex_TTJRua
 	ask(prompt) {|q| q.echo = true}
 	end
 def get_location(prompt = "where would you like to save this report? (example: awesome.txt or User/Name/Documents/awesome.txt): " )
-	ask(prompt) {|q| q.echo = true}
+	require "readline"
+while buf = Readline.readline("> ", true)
+  p Readline::HISTORY.to_a
+  print("-> ", buf, "\n")
+end
 	end		
 
 
