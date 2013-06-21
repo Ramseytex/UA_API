@@ -23,16 +23,7 @@ class Apipush
 #pp Apipush.post('/api/push/', :body => {"audience" => "all", "device_types" => "all", "notification" => {"alert" => "testing 123"}}.to_json, :headers => {"Content-type" => "application/json", "Accept" => "application/vnd.urbanairship+json; version=3;"}).inspect
 
 #API v3 Goat Push
-pp Apipush.post('/api/push/', 
-:body => 
-		{"audience" => "all", 
-		"device_types" => ["android"], 
-			"notification" => 
-				{"alert" => "Goat API v3x"}}.to_json, 
-:headers => 
-	{"Content-type" => "application/json", 
-		"Accept" => "application/vnd.urbanairship+json; version=3;", 
-			"Content-Length" => "1234"}).inspect
+pp Apipush.post('/api/push/', :body => {"audience" => "all", "device_types" => "all", "notification" => {"alert" => "testing123","android" => {"alert" => "Goat API v3x"}}}.to_json, :headers => {"Content-type" => "application/json", "Accept" => "application/vnd.urbanairship+json; version=3;"}).inspect
 
 #API v3 Goat schedule
 =begin

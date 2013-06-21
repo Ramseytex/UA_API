@@ -47,9 +47,10 @@ def get_user(prompt = "Enter your username: " )
 def get_password(prompt = "Enter your password: " )
 	ask(prompt) {|q| q.echo = '*'}
 	end
-def get_servers(prompt = "What servers do you need? Separate multiple by \",\": " )
+def get_service(prompt = "What service do you need?(i.e. yaw,gatekeeper) Separate multiple by \",\": " )
 	ask(prompt) {|q| q.echo = true}
 	end
+	
 def get_begin(prompt = "Enter a start time and date in yyyy-mm-dd-hh format: " )
 	ask(prompt) {|q| q.echo = true}
 	end
@@ -68,7 +69,7 @@ user = get_user()
 print "\n"
 password = get_password()
 print "\n"
-server = get_servers()
+service = get_service()
 print "\n"
 	print "you must specify an hour value for both times"
 print "\n"	
@@ -90,20 +91,25 @@ starth = start[3].to_i
 #endsd = ends[2].to_i
 #startd = start[2].to_i
 
+#offset query time based off of server time. EDT v.s. GMT
+#clusto pull individual servers associated with service
 
-
-
-Net::SSH.start('admin-1.prod.urbanairship.com', user, :password => password) do |ssh|
+scount = servers.count
+scount +=1
+begin 
+scount -=1
+Net::SSH.start(servers[scount]'.prod.urbanairship.com', user, :password => password) do |ssh|
 SpinningCursor.start do
   banner "Generating Report"
   type :spinner
   message ""
+end  
 ssh.open_channel do |channel|
 
 end
 
 
-#clusto pull individual servers
+
 #ssh into each server
 output = ''
 dirfiles = Dir.entries("/var/log")
@@ -111,14 +117,14 @@ i = dirfiles.count
 #open and read server logs till you find begin time stamp
 i += 1
 
-do 
-i -= 1
-(lines,i).join(',') = IO.readline(dirfiles[i])
-end while i>0
+begin
+	i -= 1
+	(line,i).join = IO.readline(dirfiles[i])
+	begin
+		line[i].select{|lines| lines =~ reference}
+	end while l>0
+end while i>0	
 i = dirfiles.count
-
-
-
 i += 1
 
 #day = ends[2]
@@ -161,13 +167,14 @@ end
 		hours -=1
 		end
 
-		#output << v
+		output << v
+		v = ''
 		end while timech>0
 
 end while i>0
 SpinningCursor.stop
 end
-
+end while scount>0
 #read server logs between begin and end and strip all lines that relate to reference
 #output to file separated by server name
 #save as csv
