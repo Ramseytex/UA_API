@@ -70,12 +70,28 @@ password = get_password()
 print "\n"
 server = get_servers()
 print "\n"
+	print "you must specify an hour value for both times"
+print "\n"	
 start = get_begin()
 print "\n"
 ends = get_end()
 print "\n"
 reference = get_reference()
 print "\n"
+
+start = start.split('-')
+ends = ends.split('-')
+endsh = 0
+starth = 0
+
+endsh = ends[3].to_i
+starth = start[3].to_i
+
+#endsd = ends[2].to_i
+#startd = start[2].to_i
+
+
+
 
 Net::SSH.start('admin-1.prod.urbanairship.com', user, :password => password) do |ssh|
 SpinningCursor.start do
@@ -85,14 +101,73 @@ SpinningCursor.start do
 ssh.open_channel do |channel|
 
 end
-SpinningCursor.stop
-end
 
 
 #clusto pull individual servers
 #ssh into each server
+output = ''
+dirfiles = Dir.entries("/var/log")
+i = dirfiles.count
 #open and read server logs till you find begin time stamp
-#open and read server logs till you find end time stamp
+i += 1
+
+do 
+i -= 1
+(lines,i).join(',') = IO.readline(dirfiles[i])
+end while i>0
+i = dirfiles.count
+
+
+
+i += 1
+
+#day = ends[2]
+=begin
+	if longtime == true
+			timech = days
+			timech +=1
+		end
+		if longtime == false
+			timech = hours
+			timech += 1
+		end
+=end
+
+begin
+	i -=1
+	hour = ends[3].to_i
+	hours = endsh - starth
+	day = ends[2].to_i
+	#days = endsd - startd
+timech = hours
+timech += 1
+=begin
+if days>hours
+longtime = true
+end
+=end	
+
+	begin
+		timech -=1 
+		lines[i].select{|v| v =~ (ends[0],"-",ends[1],"-",day,"-",hour).join(',')}
+		
+		#if days>0
+		#day -=1
+		#days -=1
+		#end
+		
+		if hours>0
+		hour -=1
+		hours -=1
+		end
+
+		#output << v
+		end while timech>0
+
+end while i>0
+SpinningCursor.stop
+end
+
 #read server logs between begin and end and strip all lines that relate to reference
 #output to file separated by server name
 #save as csv
