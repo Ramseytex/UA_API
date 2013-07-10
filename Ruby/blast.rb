@@ -23,7 +23,7 @@ class Apipush
 #pp Apipush.post('/api/push/', :body => {"audience" => "all", "device_types" => "all", "notification" => {"alert" => "testing 123"}}.to_json, :headers => {"Content-type" => "application/json", "Accept" => "application/vnd.urbanairship+json; version=3;"}).inspect
 
 #API v3 Goat Push
-#pp Apipush.post('/api/push/', :body => {"audience" => "all", "device_types" => "all", "notification" => {"alert" => "testing123","android" => {"alert" => "push 2", "collapse_key"=> "gobbledygook", "delay_while_idle" => false}}}.to_json, :headers => {"Content-type" => "application/json", "Accept" => "application/vnd.urbanairship+json; version=3;"}).inspect
+pp Apipush.post('/api/push/', :body => {"audience" => {"apid"=> "c201a1bc-b0e8-4c85-915e-aff86b390218"}, "device_types" => ["android"], "notification" => {"alert" => "You're already a social butterfly - now earn points at the same time. Sync your Angel Card to Facebook, Twitter, Foursquare and Google+ and start earning Angel Card points!"}}.to_json, :headers => {"Content-type" => "application/json", "Accept" => "application/vnd.urbanairship+json; version=3;"}).inspect
 
 
 #API v3 Goat Rich
@@ -69,4 +69,6 @@ pp Apipush.post('/api/schedules/',
 	{'Content-type' => 'application/vnd.urbanairship+json; version=3;', 
 		'Accept' => 'application/vnd.urbanairship+json; version=3;'}).inspect
 =end
+
+
 			
