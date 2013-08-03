@@ -7,8 +7,9 @@ application/json" \ --data '"aps":
 
 curl -X POST -u "Xy0gYfzLQfKYSvZuBW7R-Q:ISPsiGzqSEWa2lW48ox9og" \
    -H "Content-Type: application/json" \
-   --data '{"apids": ["0748a54b-faf7-48eb-9db6-051da3ec5093"], "android": {"alert": "Hello!"}}' \
-   https://go.urbanairship.com/api/push/
+   -H "accept: application/vnd.urbanairship+json; version=3;" \
+   --data '{"audience": {"apid": "0748a54b-faf7-48eb-9db6-051da3ec5093"}, "device_types": ["android"], "notification": {"alert": "Hello!"}}' \
+   https://go.urbanairship.com/api/push/validate
 
 curl -u <app key>:<master secret>
 "https://go.urbanairship.com/api/reports/sends/?start=2012-05-05%2010:00
